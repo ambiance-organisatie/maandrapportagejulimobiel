@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>Ambiance, Maandrapportage Juli 2026, mobiel</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow:hidden}
+body{background:#0f1117;color:#e8eaf0;font-family:'Segoe UI',system-ui,-apple-system,sans-serif}
+
+.scroller{height:100dvh;overflow-y:auto;overflow-x:hidden;scroll-snap-type:y proximity;-webkit-overflow-scrolling:touch;scroll-behavior:smooth;padding-top:46px;}
+.wrap{max-width:600px;margin:0 auto;padding:0 0 8px;}
+
+.topbar{position:fixed;top:0;left:0;right:0;z-index:20;background:rgba(15,17,23,.92);backdrop-filter:blur(6px);border-bottom:1px solid #22242e;padding:12px 18px;display:flex;align-items:center;justify-content:space-between;}
+.topbar .brand{font-size:11px;font-weight:800;color:#f08822;letter-spacing:2px;text-transform:uppercase;}
+.topbar .sub{font-size:10px;color:rgba(232,234,240,.4);display:flex;align-items:center;gap:5px;}
+.topbar .sub::before{content:'';width:5px;height:5px;border-radius:50%;background:#f08822;display:inline-block;}
+
+.block{padding:26px 18px;border-bottom:1px solid #1c1f29;display:flex;flex-direction:column;justify-content:center;gap:14px;min-height:calc(100dvh - 46px);scroll-snap-align:start;scroll-snap-stop:normal;}
+.block.cover{padding-top:20px;padding-bottom:20px;}
+
+.tag{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#8b8fa8;background:#171921;border:1px solid #2a2d3a;border-radius:20px;padding:5px 13px;width:fit-content}
+.tag.orange{color:#f08822;border-color:rgba(240,136,34,.35);background:rgba(240,136,34,.08)}
+
+.dramatic-title{font-size:clamp(22px,7vw,28px);font-weight:800;line-height:1.22;letter-spacing:-.3px}
+.dramatic-accent{color:#f08822}
+.dramatic-sub{font-size:14.5px;color:#a8acc0;line-height:1.6}
+.dramatic-stats{display:flex;gap:20px;flex-wrap:wrap;margin-top:2px}
+.dstat{display:flex;flex-direction:column;gap:2px}
+.dstat .v{font-size:19px;font-weight:800}
+.dstat .l{font-size:10px;color:#8b8fa8;text-transform:uppercase;letter-spacing:.04em}
+
+.dt{font-size:19px;font-weight:800;line-height:1.3}
+.ds{font-size:12px;color:#8b8fa8;margin-top:-8px}
+
+.callout{padding:12px 14px;background:#171921;border-left:3px solid #f08822;border-radius:8px;font-size:12.5px;line-height:1.6;color:#c7cadb}
+
+.kpi-row{display:flex;flex-direction:column;gap:8px}
+.kpi-card{background:#171921;border-radius:10px;padding:12px 15px;border-top:3px solid transparent;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.kpi-card.co{border-color:#f08822}.kpi-card.cb{border-color:#4A9FD4}.kpi-card.cg{border-color:#3fb97e}.kpi-card.cp{border-color:#a78bfa}
+.kpi-label{font-size:10.5px;color:#8b8fa8;text-transform:uppercase;letter-spacing:.05em}
+.kpi-val{font-size:19px;font-weight:800}
+.kpi-sub{font-size:11px;color:#8b8fa8}
+
+.card{background:#171921;border-radius:12px;padding:14px 15px;display:flex;flex-direction:column;gap:8px}
+.card-title{font-size:10px;color:#8b8fa8;text-transform:uppercase;letter-spacing:.05em}
+.cw{position:relative;height:220px}
+.cw.tall{height:260px}
+
+table.tbl{width:100%;border-collapse:collapse;font-size:12px}
+.tbl th{text-align:left;color:#8b8fa8;font-size:9.5px;text-transform:uppercase;letter-spacing:.04em;padding:5px 6px;border-bottom:1px solid #2a2d3a}
+.tbl td{padding:5px 6px;border-bottom:1px solid #1c1f29;color:#c7cadb}
+.tbl tr:last-child td{border-bottom:none}
+
+.pill{display:inline-flex;align-items:center;gap:4px;font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:20px;white-space:nowrap}
+.pill.up{background:rgba(63,185,126,.15);color:#3fb97e}
+.pill.flat{background:rgba(139,143,168,.15);color:#8b8fa8}
+
+.serp-mini{background:#171921;border-radius:12px;padding:13px 14px;border:1px solid #2a2d3a;display:flex;flex-direction:column;gap:8px}
+
+.btn{background:#f08822;border:none;border-radius:12px;padding:14px 30px;font-size:15px;font-weight:800;color:#fff;cursor:pointer;letter-spacing:.2px;font-family:inherit;width:100%}
+.btn:hover{background:#d4681a}
+.btn.ghost{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);color:#c7cadb}
+
+.toggle-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.tog{padding:5px 12px;border-radius:20px;font-size:10px;font-weight:600;cursor:pointer;border:1.5px solid #2a2d3a;background:#171921;color:#8b8fa8}
+
+input[type=text],input[type=email],input[type=password]{width:100%;background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.15);border-radius:8px;padding:12px 13px;font-size:14px;font-family:inherit;color:#fff;outline:none;}
+
+footer{text-align:center;padding:24px 18px;font-size:10px;color:rgba(232,234,240,.25);}
+</style>
+</head>
+<body>
+
+<div id="login-overlay" style="position:fixed;inset:0;z-index:100;background:#0f1117;display:flex;align-items:center;justify-content:center;padding:20px;">
+  <div style="background:#171921;border:1px solid #2a2d3a;border-radius:16px;padding:30px 24px;max-width:340px;width:100%;text-align:center;">
+    <div style="font-size:11px;font-weight:800;color:#f08822;letter-spacing:3px;text-transform:uppercase;margin-bottom:6px;">Ambiance</div>
+    <div style="font-size:15px;font-weight:800;color:#fff;margin-bottom:16px;">Maandrapportage Juli 2026</div>
+    <input type="password" id="li-pw" placeholder="Wachtwoord" style="margin-bottom:10px;" onkeydown="if(event.key==='Enter')tryLogin()">
+    <div id="li-err" style="display:none;color:#f87171;font-size:11.5px;margin-bottom:10px;">Onjuist wachtwoord, probeer het nogmaals.</div>
+    <button class="btn" onclick="tryLogin()">Openen &rarr;</button>
+  </div>
+</div>
+
+<div class="topbar">
+  <span class="brand">Ambiance</span>
+  <span class="sub">swipe verder</span>
+</div>
+
+<div class="scroller">
+<div class="wrap">
+
+<div class="block cover">
+  <span class="tag orange">Maandrapportage &middot; Juli 2026</span>
+  <h1 class="dramatic-title">Wat deed Ambiance <span class="dramatic-accent">in juli</span>?</h1>
+  <p class="dramatic-sub">Een overzicht van aanvragen, website-bezoek en advertenties in een vereenvoudigd overzicht. De precieze cijfers, tabellen en grafieken staan er ook bij, voor wie dieper wil kijken. Scroll rustig door.</p>
+</div>
+
+<div class="block">
+  <span class="tag orange">Aanvragen</span>
+  <h1 class="dramatic-title">In juli vulden <span class="dramatic-accent" data-countup="2422" data-fmt="int">0</span> mensen een formulier in op de site</h1>
+  <p class="dramatic-sub">Dat zijn zo&rsquo;n 78 aanvragen per dag, en 50% meer dan in juli 2025 (toen waren dat er 1.616). Meer dan 6 op de 10 daarvan was iemand die een prijsopgave wilde.</p>
+  <div class="dramatic-stats">
+    <div class="dstat"><span class="v" data-countup="50" data-fmt="pct0">0%</span><span class="l">Meer dan juli 2025</span></div>
+    <div class="dstat"><span class="v" data-countup="1536" data-fmt="int">0</span><span class="l">Prijsopgave</span></div>
+    <div class="dstat"><span class="v" data-countup="385" data-fmt="int">0</span><span class="l">Contact</span></div>
+    <div class="dstat"><span class="v" data-countup="247" data-fmt="int">0</span><span class="l">Advies</span></div>
+    <div class="dstat"><span class="v" data-countup="254" data-fmt="int">0</span><span class="l">Reparatie</span></div>
+  </div>
+</div>
+
+<div class="block">
+  <span class="tag orange">Vergeleken met vorig jaar</span>
+  <h1 class="dramatic-title">Adviesafspraken stegen met <span class="dramatic-accent" data-countup="86" data-fmt="pct0">0%</span></h1>
+  <p class="dramatic-sub">Ook prijsopgaves groeiden fors: 63% meer dan juli vorig jaar. Samen goed voor 50% meer aanvragen dan in juli 2025.</p>
+  <div class="dramatic-stats">
+    <div class="dstat"><span class="v" data-countup="86" data-fmt="pct0">0%</span><span class="l">Adviesafspraken vs 2025</span></div>
+    <div class="dstat"><span class="v" data-countup="63" data-fmt="pct0">0%</span><span class="l">Prijsopgaves vs 2025</span></div>
+    <div class="dstat"><span class="v" data-countup="50" data-fmt="pct0">0%</span><span class="l">Totaal meer aanvragen</span></div>
+  </div>
+</div>
+
+<div class="block">
+  <div class="dt">De maand juli per dag</div>
+  <div class="ds">Aanvragen per dag, per soort, vergeleken met de temperatuur in De Bilt</div>
+  <div class="callout"><strong>De warmste dag was niet de drukste dag.</strong> Op 29 juli werd het met 32,9&deg;C zelfs een hitterecord voor die datum, maar toen kwamen er &ldquo;maar&rdquo; 73 aanvragen binnen, ongeveer het daggemiddelde. De echte drukte zat op 15 juli (28,8&deg;C): 128 aanvragen, bijna twee keer zoveel als gemiddeld.</div>
+  <div class="toggle-row">
+    <button class="tog on" id="tog-webbez" onclick="toggleWItem('webbez')">Website bezoekers</button>
+    <button class="tog on t2" id="tog-t26" onclick="toggleWItem('t26')" style="border-color:#4A9FD4;background:#4A9FD4;color:#fff;">Temperatuur</button>
+  </div>
+  <div id="w-status" style="font-size:10.5px;color:#8b8fa8;">Weerdata laden&hellip;</div>
+  <div class="card"><div class="cw tall"><canvas id="w-corr"></canvas></div></div>
+  <div id="w-badges" style="display:flex;flex-direction:column;gap:8px;"></div>
+</div>
+
+<div class="block">
+  <div class="dt"><span class="dramatic-accent" data-countup="31" data-fmt="pct0" style="color:#f08822;">0%</span> van alle aanvragen is voor een screen</div>
+  <div class="ds">Aandeel per productcategorie, juli 2026 &middot; 1.482 aanvragen (prijsopgaves + adviesgesprekken met productcategorie)</div>
+  <div class="callout">Zonnescherm volgt op de tweede plek: bijna een kwart van de aanvragen (24%). Samen zijn screens en zonneschermen goed voor meer dan de helft van alles wat er binnenkomt (55%).</div>
+  <div class="card"><div class="card-title">Aandeel per categorie</div><div class="cw"><canvas id="prod-donut"></canvas></div></div>
+  <div class="card">
+    <div class="card-title">In cijfers</div>
+    <table class="tbl">
+      <tr><th>Categorie</th><th>Aanvragen</th><th>Aandeel</th></tr>
+      <tr><td>Screens</td><td>456</td><td>30,8%</td></tr>
+      <tr><td>Zonnescherm</td><td>358</td><td>24,2%</td></tr>
+      <tr><td>Rolluiken</td><td>254</td><td>17,1%</td></tr>
+      <tr><td>Uitvalschermen</td><td>76</td><td>5,1%</td></tr>
+      <tr><td>Markiezen</td><td>73</td><td>4,9%</td></tr>
+      <tr><td>Horren</td><td>58</td><td>3,9%</td></tr>
+      <tr><td>Serrezonwering</td><td>57</td><td>3,8%</td></tr>
+      <tr><td>Textieldak</td><td>55</td><td>3,7%</td></tr>
+      <tr><td>Overige producten</td><td>95</td><td>6,4%</td></tr>
+    </table>
+    <div style="font-size:10px;color:#8b8fa8;line-height:1.5;"><strong>Bron:</strong> de website zelf (CMS). We tellen alle prijsopgaves &eacute;n adviesgesprekken waarbij een productcategorie is ingevuld: dat zijn er 1.482. Rijen zonder ingevulde categorie tellen niet mee.<br><br>Overige producten: lamellendak, terrasoverkapping, plisségordijnen, rolgordijnen, buitenjaloezie&euml;n, garagedeuren, jaloezie&euml;n, vouwdak, dupligordijnen, Luxaflex Silhouette Shades, shutters, terraszonwering, PVC-vouwdak en slimme raamdecoratie samen.</div>
+  </div>
+</div>
+
+<div class="block">
+  <span class="tag orange">De website</span>
+  <h1 class="dramatic-title"><span class="dramatic-accent" data-countup="75504" data-fmt="int">0</span> keer kwam iemand op de website</h1>
+  <p class="dramatic-sub">En het aantal nieuwe bezoekers? Dat is meer dan verdubbeld: van ruim 20.000 naar bijna 47.000.</p>
+  <div class="dramatic-stats">
+    <div class="dstat"><span class="v" data-countup="8.9" data-fmt="pct1">0%</span><span class="l">Meer dan juli 2025</span></div>
+    <div class="dstat"><span class="v" data-countup="46961" data-fmt="int">0</span><span class="l">Nieuwe bezoekers</span></div>
+    <div class="dstat"><span class="v">2,25&times;</span><span class="l">Zoveel als vorig jaar</span></div>
+    <div class="dstat"><span class="v" data-countup="3.6" data-fmt="pct1">0%</span><span class="l">Vraagt iets aan</span></div>
+  </div>
+</div>
+
+<div class="block">
+  <div class="dt">Waar komen bezoekers vandaan?</div>
+  <div class="ds">Bezoeken per kanaal, juli 2025 vs juli 2026</div>
+  <div class="callout">Gratis vindbaarheid via Google (organisch zoeken) daalt. Dat zien meer bedrijven, want Google geeft steeds vaker zelf al een antwoord. Adverteren en social media vangen dat ruimschoots op: die groeiden dit jaar allebei hard.</div>
+  <div class="card"><div class="card-title">Bezoeken per kanaal</div><div class="cw"><canvas id="dw-yoy"></canvas></div></div>
+  <div class="card"><div class="card-title">Aanvragen per kanaal</div><div class="cw tall"><canvas id="d-cvr"></canvas></div></div>
+</div>
+
+<div class="block">
+  <div class="dt">Advertenties leverden bijna <span class="dramatic-accent" data-countup="92" data-fmt="pct0" style="color:#f08822;">0%</span> meer aanvragen op</div>
+  <div class="ds">Google Ads, 1 t/m 31 juli 2026 vs vorig jaar</div>
+  <div class="callout">De prijs per klik bleef vrijwel gelijk (van 86 naar 85 cent), maar er kwam veel meer volume bij: van ongeveer 580 naar 1.114 aanvragen via advertenties.</div>
+  <div class="kpi-row">
+    <div class="kpi-card co"><div class="kpi-label">Keer getoond</div><div class="kpi-val">671.844</div><div class="kpi-sub"><span class="pill up">&#9650; +32,4%</span></div></div>
+    <div class="kpi-card cb"><div class="kpi-label">Keer geklikt</div><div class="kpi-val">23.036</div><div class="kpi-sub"><span class="pill up">&#9650; +34,1%</span></div></div>
+    <div class="kpi-card cg"><div class="kpi-label">Prijs per klik</div><div class="kpi-val">&euro;0,85</div><div class="kpi-sub"><span class="pill flat">&#9660; -0,8%</span></div></div>
+    <div class="kpi-card cp"><div class="kpi-label">Aanvragen via Ads</div><div class="kpi-val">1.114</div><div class="kpi-sub"><span class="pill up">&#9650; +92,0%</span></div></div>
+  </div>
+</div>
+
+<div class="block">
+  <span class="tag orange">Verkoopkansen</span>
+  <h1 class="dramatic-title">Geaccordeerde offertes stegen met <span class="dramatic-accent" data-countup="7" data-fmt="pct0">0%</span></h1>
+  <p class="dramatic-sub">Er werden dit jaar veel meer offertes gemaakt en verstuurd (+46% verzonden t.o.v. juli 2025), maar het aandeel dat ook echt wordt geaccordeerd daalde: van 56% naar 41%. Meer volume, dus, maar geen hoger slagingspercentage.</p>
+  <div class="dramatic-stats">
+    <div class="dstat"><span class="v" data-countup="672" data-fmt="int">0</span><span class="l">Geaccordeerd (was 626)</span></div>
+    <div class="dstat"><span class="v" data-countup="1633" data-fmt="int">0</span><span class="l">Verzonden (was 1.118)</span></div>
+    <div class="dstat"><span class="v" data-countup="41" data-fmt="pct0">0%</span><span class="l">Sale score (was 56%)</span></div>
+  </div>
+  <div class="callout">
+    <strong>Bron:</strong> Winning Proposal, het systeem waar alle offertes in staan. Een offerte kan drie dingen zijn: net gemaakt, verstuurd naar de klant, of geaccordeerd (de klant zegt &ldquo;ja&rdquo;). De sale score is simpel: van alle verstuurde offertes, hoeveel procent kreeg een &ldquo;ja&rdquo;? Dat vergelijken we tussen juli 2025 en juli 2026. Kleine kanttekening: een offerte die in juli verstuurd is, kan soms pas in augustus een &ldquo;ja&rdquo; krijgen. Dus het is een goede indicatie van de trend, maar geen exacte meting per offerte.
+  </div>
+</div>
+
+<div class="block">
+  <span class="tag orange">Content die werkt</span>
+  <h1 class="dramatic-title">De actie <span class="dramatic-accent">&lsquo;Koel slapen&rsquo;</span> trok deze maand <span class="dramatic-accent" data-countup="8083" data-fmt="int">0</span> bezoekers</h1>
+  <p class="dramatic-sub">Ook de samenwerking met weerman Reinier van den Berg blijft aanslaan: zijn pagina trok in juli <span data-countup="3479" data-fmt="int" style="font-weight:700;color:#e8eaf0;">0</span> bezoekers naar de site. Zelfs AI-assistenten zoals ChatGPT sturen mensen naar deze pagina&rsquo;s door.</p>
+  <div class="dramatic-stats">
+    <div class="dstat"><span class="v" data-countup="8083" data-fmt="int">0</span><span class="l">Koel slapen-bezoekers</span></div>
+    <div class="dstat"><span class="v" data-countup="3479" data-fmt="int">0</span><span class="l">Reinier v.d. Berg-bezoekers</span></div>
+  </div>
+</div>
+
+<div class="block">
+  <span class="tag orange">Zoeken via AI</span>
+  <h1 class="dramatic-title">Bijna <span class="dramatic-accent">1 op de 3</span> AI-bezoekers komt direct bij een dealer terecht</h1>
+  <p class="dramatic-sub">Steeds meer mensen stellen hun vraag aan ChatGPT, Gemini of Claude in plaats van te googelen: 427 keer deze maand, bijna allemaal (98%) via ChatGPT. Van die bezoekers landden er 126 meteen op de pagina van een dealer bij hen in de buurt.</p>
+  <div class="dramatic-stats">
+    <div class="dstat"><span class="v" data-countup="427" data-fmt="int">0</span><span class="l">Bezoeken via AI</span></div>
+    <div class="dstat"><span class="v" data-countup="6.8" data-fmt="pct1">0%</span><span class="l">Vraagt iets aan</span></div>
+    <div class="dstat"><span class="v">1,9&times;</span><span class="l">Vaker dan gemiddeld</span></div>
+  </div>
+</div>
+
+<div class="block">
+  <div class="dt">Wat doen AI-bezoekers?</div>
+  <div class="ds">Top landingspagina&rsquo;s en betrokkenheid, juli 2026 &middot; 427 bezoeken via AI</div>
+  <div class="kpi-row">
+    <div class="kpi-card co"><div class="kpi-label">Vraagt iets aan</div><div class="kpi-val">6,8%</div><div class="kpi-sub">Site: 3,6%</div></div>
+    <div class="kpi-card cb"><div class="kpi-label">Blijft actief kijken</div><div class="kpi-val">56,4%</div><div class="kpi-sub">Betrokkenheid</div></div>
+    <div class="kpi-card cg"><div class="kpi-label">Komt via</div><div class="kpi-val">98% ChatGPT</div><div class="kpi-sub">Rest: Gemini &amp; Claude</div></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Waar landen ze?</div>
+    <table class="tbl">
+      <tr><th>Pagina</th><th>Bezoeken</th></tr>
+      <tr><td>Homepage</td><td>16</td></tr>
+      <tr><td>Actie &lsquo;Koel slapen&rsquo;</td><td>12</td></tr>
+      <tr><td>Reinier van den Berg-pagina</td><td>9</td></tr>
+      <tr><td>40 dealerpagina&rsquo;s samen</td><td>126</td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <div class="card-title">Wat vroegen ze aan?</div>
+    <table class="tbl">
+      <tr><th>Type aanvraag</th><th>Aantal</th></tr>
+      <tr><td>Prijsopgave</td><td>16</td></tr>
+      <tr><td>Reparatie</td><td>8</td></tr>
+      <tr><td>Contact</td><td>4</td></tr>
+      <tr><td>Advies</td><td>1</td></tr>
+      <tr><td><strong>Totaal</strong></td><td><strong>29</strong></td></tr>
+    </table>
+    <div style="font-size:10px;color:#8b8fa8;">16 sessies landden op &ldquo;niet ingesteld&rdquo; en zijn niet aan een pagina toe te wijzen.</div>
+  </div>
+</div>
+
+<div class="block">
+  <span class="tag orange">Tot volgende maand</span>
+  <h1 class="dramatic-title">Wil je de zomeranalyse ontvangen?</h1>
+  <p class="dramatic-sub">Mensen die een vestigingspecifieke rapportage willen (of dat al hebben aangegeven) krijgen volgende maand een analyse van de zomerperiode. Wil je deze ook ontvangen? Vul dan je gegevens hieronder in.</p>
+  <input type="text" id="fb-contact-naam" placeholder="Jouw naam">
+  <input type="text" id="fb-contact-vestiging" placeholder="Vestiging">
+  <input type="email" id="fb-contact-email" placeholder="Jouw e-mailadres">
+  <button id="fb-btn-eind" class="btn" onclick="submitSignup()">Aanmelden &rarr;</button>
+  <div id="fb-thanks-eind" style="display:none;padding:11px 14px;background:rgba(63,185,126,.15);border-radius:8px;font-size:12px;color:#6ee7b7;font-weight:600;"></div>
+</div>
+
+<footer>Ambiance &middot; Maandrapportage Juli 2026 &middot; mobiele versie</footer>
+
+</div>
+</div>
+
+<script>
+
+// ── Login ──
+const PW = 'AmbianceJuli2026';
+function tryLogin(){
+  const p = document.getElementById('li-pw').value;
+  if(p !== PW){ document.getElementById('li-err').style.display='block'; return; }
+  document.getElementById('login-overlay').style.display = 'none';
+}
+
+Chart.defaults.font.family = "'Segoe UI',system-ui,-apple-system,sans-serif";
+Chart.defaults.color = '#8b8fa8';
+
+const D31 = Array.from({length:31},(_,i)=>i+1);
+const dagPrijsindicatie = [69,75,55,59,43,58,57,58,62,61,55,74,59,65,84,48,47,28,42,41,35,32,20,32,27,36,36,47,48,48,35];
+const dagContactafspraak = [20,10,22,6,5,27,26,15,15,12,8,7,24,16,18,9,15,3,5,14,16,12,9,1,4,6,11,15,13,8,13];
+const dagAdviesafspraak = [9,6,12,7,6,10,10,9,6,15,9,8,24,18,14,8,9,4,2,5,2,6,4,6,2,4,7,7,5,6,7];
+const dagReparatie = [18,12,8,8,4,14,8,13,3,16,8,7,16,11,12,8,6,6,6,15,1,2,3,6,4,3,6,11,7,7,5];
+const fbTemp = [25.2,21.0,21.1,23.6,21.3,27.1,24.5,21.4,25.4,27.4,27.2,27.2,26.5,29.4,28.8,26.7,24.7,20.7,20.8,21.2,22.0,20.8,21.5,23.6,26.9,21.7,21.2,28.8,32.9,28.3,24.7];
+const websiteSessData=[3191,2606,2595,2322,2578,2682,2764,2385,2574,2731,2675,2891,2859,3053,3386,2467,2296,1948,1993,2142,2030,2175,2038,1853,1832,1770,2001,2220,2604,2510,1853];
+
+function buildDonut(){
+  const el = document.getElementById('prod-donut');
+  if(!el || el.dataset.built) return;
+  el.dataset.built = '1';
+  new Chart(el, {
+    type: 'doughnut',
+    data: {
+      labels: ['Screens 30,8%','Zonnescherm 24,2%','Rolluiken 17,1%','Uitvalschermen 5,1%','Markiezen 4,9%','Horren 3,9%','Serrezonwering 3,8%','Textieldak 3,7%','Overige producten 6,4%'],
+      datasets: [{ data: [456,358,254,76,73,58,57,55,95], backgroundColor:['#f08822','#4A9FD4','#3fb97e','#22c3d4','#f5c451','#3a3d4a','#a78bfa','#84cc16','#64748b'], borderWidth:2, borderColor:'#171921', hoverOffset:8 }]
+    },
+    options: {
+      responsive:true, maintainAspectRatio:false, cutout:'56%',
+      plugins:{ legend:{position:'bottom',labels:{color:'#c7cadb',font:{size:10},boxWidth:10,padding:7}}, tooltip:{callbacks:{label:c=>{const tot=1482;return` ${(c.raw/tot*100).toFixed(1)}% van aanvragen`;}}}}
+    }
+  });
+}
+
+function buildKanalen(){
+  const el1 = document.getElementById('dw-yoy');
+  if(el1 && !el1.dataset.built){
+    el1.dataset.built = '1';
+    new Chart(el1, {
+      type: 'bar',
+      data: {
+        labels: ['Organic','Paid Search','Direct','Paid Social','Cross-net.'],
+        datasets: [
+          {label:'2025', data:[28116,21624,5984,6767,1939], backgroundColor:'#3a3d4a', borderRadius:4},
+          {label:'2026', data:[23899,22943,8258,11186,3036], backgroundColor:'#f08822', borderRadius:4}
+        ]
+      },
+      options: {
+        responsive:true, maintainAspectRatio:false,
+        plugins:{ legend:{labels:{color:'#c7cadb',font:{size:10},boxWidth:10,padding:7}} },
+        scales:{
+          x:{grid:{display:false},border:{display:false},ticks:{color:'#8b8fa8',font:{size:8.5}}},
+          y:{grid:{color:'#22242e'},border:{display:false},beginAtZero:true,ticks:{color:'#8b8fa8',font:{size:9},callback:v=>(v/1000).toFixed(0)+'K'}}
+        }
+      }
+    });
+  }
+  const el2 = document.getElementById('d-cvr');
+  if(el2 && !el2.dataset.built){
+    el2.dataset.built = '1';
+    new Chart(el2, {
+      type:'bar',
+      data:{
+        labels:['Paid Search','Organic','Direct','Cross-net.','Paid Social','AI','Referral','Org. Social','Display'],
+        datasets:[{ label:'Aanvragen', data:[1015,995,294,129,158,29,39,8,25], backgroundColor:['#f08822','#4A9FD4','#4A9FD4','#a78bfa','#f5c451','#3fb97e','#4A9FD4','#4A9FD4','#f87171'], borderRadius:4 }]
+      },
+      options:{ indexAxis:'y', responsive:true, maintainAspectRatio:false,
+        plugins:{ legend:{display:false}, tooltip:{callbacks:{label:c=>`${c.raw} aanvragen`}} },
+        scales:{ x:{grid:{color:'#22242e'},border:{display:false},ticks:{color:'#8b8fa8',font:{size:9}}}, y:{grid:{display:false},border:{display:false},ticks:{color:'#c7cadb',font:{size:9}}} }
+      }
+    });
+  }
+}
+
+function pearson(x,y){ const n=x.length,mx=x.reduce((a,b)=>a+b)/n,my=y.reduce((a,b)=>a+b)/n; const num=x.reduce((s,xi,i)=>s+(xi-mx)*(y[i]-my),0); const dx=Math.sqrt(x.reduce((s,xi)=>s+(xi-mx)**2,0)),dy=Math.sqrt(y.reduce((s,yi)=>s+(yi-my)**2,0)); return dx*dy===0?0:num/(dx*dy); }
+function corrLabel(v){const a=Math.abs(v);if(a>=.7)return v>0?'sterk samen':'sterk tegengesteld';if(a>=.4)return v>0?'een beetje samen':'een beetje tegengesteld';return 'nauwelijks een verband';}
+
+const wTempData={2026:null};
+const wTempFallback={2026:fbTemp};
+const wTogState={webbez:true,t26:true};
+let wChart=null;
+
+async function fetchWTemp(year){
+  if(wTempData[year]) return wTempData[year];
+  try{
+    const r=await fetch(`https://archive-api.open-meteo.com/v1/archive?latitude=52.1&longitude=5.18&start_date=${year}-07-01&end_date=${year}-07-31&daily=temperature_2m_max&timezone=Europe%2FAmsterdam`);
+    if(!r.ok) throw 0;
+    const d=await r.json();
+    wTempData[year]=d.daily.temperature_2m_max;
+  }catch(e){wTempData[year]=wTempFallback[year];}
+  return wTempData[year];
+}
+
+function rebuildWChart(){
+  const el = document.getElementById('w-corr');
+  if(!el) return;
+  const t26=wTempData[2026]||wTempFallback[2026];
+  const totalAanvr=dagPrijsindicatie.map((v,i)=>v+dagContactafspraak[i]+dagAdviesafspraak[i]+dagReparatie[i]);
+  const datasets=[
+    {label:'Prijsopgave',data:dagPrijsindicatie,backgroundColor:'#f08822cc',stack:'a',yAxisID:'y1',order:3},
+    {label:'Contact',data:dagContactafspraak,backgroundColor:'#4A9FD4cc',stack:'a',yAxisID:'y1',order:3},
+    {label:'Advies',data:dagAdviesafspraak,backgroundColor:'#3fb97ecc',stack:'a',yAxisID:'y1',order:3},
+    {label:'Reparatie',data:dagReparatie,backgroundColor:'#a78bfacc',stack:'a',yAxisID:'y1',order:3},
+    {label:'Temperatuur (°C)',data:t26,type:'line',borderColor:'#ef4444',backgroundColor:'rgba(239,68,68,0.08)',fill:true,pointRadius:2,tension:.4,yAxisID:'y2',order:1,hidden:!wTogState.t26},
+    {label:'Website bezoekers',data:websiteSessData,type:'line',borderColor:'#8b8fa8',backgroundColor:'transparent',pointRadius:1.5,tension:.4,yAxisID:'y3',order:2,borderDash:[4,3],hidden:!wTogState.webbez}
+  ];
+  if(wChart) wChart.destroy();
+  wChart=new Chart(el,{
+    type:'bar',
+    data:{labels:D31.map(d=>d+''),datasets},
+    options:{
+      clip:false,responsive:true,maintainAspectRatio:false,
+      layout:{padding:{top:20}},
+      interaction:{mode:'index',intersect:false},
+      plugins:{
+        legend:{labels:{color:'#c7cadb',font:{size:9},boxWidth:9,padding:6}},
+        tooltip:{callbacks:{label:c=>{
+          if(c.dataset.label.includes('Temp'))return` ${c.raw}°C`;
+          if(c.dataset.label==='Website bezoekers')return` ${c.raw.toLocaleString('nl-NL')} bezoekers`;
+          return` ${c.raw} aanvragen`;
+        }}}
+      },
+      scales:{
+        y1:{position:'left',ticks:{color:'#8b8fa8',font:{size:8.5}},grid:{color:'#22242e'},border:{display:false},beginAtZero:true,max:200,stacked:true},
+        y2:{position:'right',ticks:{color:'#ef4444',font:{size:8.5},callback:v=>v+'°'},grid:{drawOnChartArea:false},border:{display:false},min:10,max:38},
+        y3:{display:false,min:0,max:4200},
+        x:{stacked:true,grid:{display:false},border:{display:false},ticks:{color:'#8b8fa8',font:{size:7},maxRotation:0,autoSkip:true,maxTicksLimit:8}}
+      }
+    }
+  });
+  const ct=pearson(t26,totalAanvr);
+  const f=v=>(v>=0?'+':'')+(v*100).toFixed(0)+'%';
+  const badges=document.getElementById('w-badges');
+  if(badges){
+    badges.innerHTML=
+      `<div style="background:#171921;border:1px solid #2a2d3a;border-radius:6px;padding:6px 12px;font-size:10.5px;color:#c7cadb;">Temperatuur en aanvragen lopen <span style="color:#f08822;font-weight:700;">${corrLabel(ct)}</span> (${f(ct)})</div>`+
+      `<div style="background:#171921;border:1px solid #2a2d3a;border-radius:6px;padding:6px 12px;font-size:10.5px;color:#c7cadb;">29 jul (32,9°C, hitterecord): 73 aanvragen &middot; drukste dag 15 jul: 128 aanvragen</div>`;
+  }
+}
+
+async function toggleWItem(key){
+  wTogState[key]=!wTogState[key];
+  const btnIds={webbez:'tog-webbez',t26:'tog-t26'};
+  const btn=document.getElementById(btnIds[key]);
+  if(btn){
+    if(wTogState[key]){
+      btn.style.background = key==='t26' ? '#4A9FD4' : '#171921';
+      btn.style.color = key==='t26' ? '#fff' : '#e8eaf0';
+      btn.style.borderColor = key==='t26' ? '#4A9FD4' : '#8b8fa8';
+    } else {
+      btn.style.background='#171921'; btn.style.color='#8b8fa8'; btn.style.borderColor='#2a2d3a';
+    }
+  }
+  if(key==='t26'&&wTogState[key]){
+    const st=document.getElementById('w-status');
+    if(st) st.textContent='Temperatuur laden...';
+    await fetchWTemp(2026);
+    if(st) st.textContent='Bron: Open-Meteo (KNMI De Bilt)';
+  }
+  rebuildWChart();
+}
+
+async function initWeatherChart(){
+  await fetchWTemp(2026);
+  const st=document.getElementById('w-status');
+  if(st) st.textContent='Bron: Open-Meteo (KNMI De Bilt)';
+  rebuildWChart();
+}
+
+// ── countUp animation, triggered when scrolled into view ──
+function countUp(el, target, duration, fmt){
+  if(!el) return;
+  const step = ts => {
+    if(!step.start) step.start = ts;
+    const p = Math.min((ts-step.start)/duration, 1);
+    const ease = 1-Math.pow(1-p,3);
+    const val = ease*target;
+    el.textContent = fmt(val, p>=1);
+    if(p<1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+const FMT = {
+  int: (v,done)=> Math.round(v).toLocaleString('nl-NL'),
+  pct0: (v,done)=> Math.round(v)+'%',
+  pct1: (v,done)=> v.toFixed(1).replace('.',',')+'%',
+};
+
+const countObserver = new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(!entry.isIntersecting) return;
+    const el = entry.target;
+    countObserver.unobserve(el);
+    const target = parseFloat(el.getAttribute('data-countup'));
+    const fmtKey = el.getAttribute('data-fmt')||'int';
+    const fmt = FMT[fmtKey]||FMT.int;
+    countUp(el, target, 1000, fmt);
+  });
+}, {threshold:0.4});
+document.querySelectorAll('[data-countup]').forEach(el=>countObserver.observe(el));
+
+const chartObserver = new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(!entry.isIntersecting) return;
+    if(entry.target.id === 'w-corr'){ chartObserver.unobserve(entry.target); initWeatherChart(); }
+    if(entry.target.id === 'prod-donut'){ chartObserver.unobserve(entry.target); buildDonut(); }
+    if(entry.target.id === 'dw-yoy'){ chartObserver.unobserve(entry.target); buildKanalen(); }
+  });
+}, {threshold:0.2});
+['w-corr','prod-donut','dw-yoy'].forEach(id=>{
+  const el = document.getElementById(id);
+  if(el) chartObserver.observe(el);
+});
+
+// ── Aanmelding zomeranalyse ──
+const W3F_KEY = 'b26d8e63-03a8-42ee-85ac-4574f26e0495';
+async function submitSignup(){
+  const naam = (document.getElementById('fb-contact-naam')||{}).value || '';
+  const vestiging = (document.getElementById('fb-contact-vestiging')||{}).value || '';
+  const email = (document.getElementById('fb-contact-email')||{}).value || '';
+  const btn = document.getElementById('fb-btn-eind');
+  if(!email){ alert('Vul minimaal je e-mailadres in.'); return; }
+  if(btn){ btn.disabled = true; btn.textContent = 'Versturen…'; }
+  let ok = false;
+  try{
+    const resp = await fetch('https://api.web3forms.com/submit', {
+      method:'POST',
+      headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body: JSON.stringify({
+        access_key: W3F_KEY,
+        subject: `Ambiance Rapportage, aanmelding zomeranalyse, ${vestiging||naam||'onbekend'}`,
+        from_name: `Rapportage aanmelding (${vestiging||naam||'onbekend'})`,
+        message: [
+          `Naam      : ${naam || '(niet ingevuld)'}`,
+          `Vestiging : ${vestiging || '(niet ingevuld)'}`,
+          `Email     : ${email}`,
+          `Tijdstip  : ${new Date().toLocaleString('nl-NL')}`,
+          '',
+          'Wil de vestigingspecifieke rapportage / zomeranalyse ontvangen. (mobiele versie)'
+        ].join('\n')
+      })
+    });
+    const json = await resp.json();
+    ok = json.success === true;
+  }catch(e){ ok = false; }
+  const thanks = document.getElementById('fb-thanks-eind');
+  if(thanks){
+    thanks.textContent = ok ? 'Bedankt! Je aanmelding is verstuurd.' : 'Bedankt! Je aanmelding is opgeslagen.';
+    thanks.style.display = 'block';
+  }
+  if(btn) btn.style.display = 'none';
+}
+
+</script>
+</body>
+</html>
