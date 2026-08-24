@@ -11,64 +11,63 @@ html,body{height:100%;width:100%;overscroll-behavior:none}
 body{background:#0f1117;color:#e8eaf0;font-family:'Segoe UI',system-ui,-apple-system,sans-serif;overflow:hidden}
 
 .ss{position:relative;width:100vw;height:100dvh}
-.slide{position:absolute;inset:0;padding:52px 20px 64px;display:flex;flex-direction:column;justify-content:center;gap:12px;opacity:0;visibility:hidden;transition:opacity .3s ease,visibility .3s ease;pointer-events:none;overflow:hidden}
+.slide{position:absolute;inset:0;padding:54px 20px 58px;display:flex;flex-direction:column;justify-content:center;gap:16px;opacity:0;visibility:hidden;transition:opacity .3s ease,visibility .3s ease;pointer-events:none;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;}
 .slide.active{opacity:1!important;visibility:visible!important;pointer-events:all}
 .slide.top{justify-content:flex-start;padding-top:58px}
 
 .flbl{position:fixed;z-index:20;font-size:9px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:rgba(232,234,240,.28);pointer-events:none}
 .brand{top:14px;left:18px}.counter{top:14px;right:18px}
 
-.tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#8b8fa8;background:#171921;border:1px solid #2a2d3a;border-radius:20px;padding:4px 12px;width:fit-content;flex-shrink:0}
+.tag{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#8b8fa8;background:#171921;border:1px solid #2a2d3a;border-radius:20px;padding:5px 13px;width:fit-content;flex-shrink:0}
 .tag.orange{color:#f08822;border-color:rgba(240,136,34,.35);background:rgba(240,136,34,.08)}
 
-.dramatic-title{font-size:clamp(24px,8vw,32px);font-weight:800;line-height:1.16;letter-spacing:-.3px;flex-shrink:0}
+.dramatic-title{font-size:clamp(30px,9.5vw,40px);font-weight:800;line-height:1.14;letter-spacing:-.4px;flex-shrink:0}
 .dramatic-accent{color:#f08822}
-.dramatic-sub{font-size:clamp(13.5px,3.9vw,15px);color:#a8acc0;line-height:1.5;flex-shrink:0}
-.dramatic-stats{display:flex;gap:16px;row-gap:10px;margin-top:2px;flex-wrap:wrap;flex-shrink:0}
-.dstat{display:flex;flex-direction:column;gap:1px}
-.dstat .v{font-size:clamp(18px,5vw,21px);font-weight:800}
-.dstat .l{font-size:9.5px;color:#8b8fa8;text-transform:uppercase;letter-spacing:.03em}
+.dramatic-sub{font-size:clamp(16px,4.3vw,18px);color:#a8acc0;line-height:1.55;flex-shrink:0}
+.dramatic-stats{display:flex;gap:22px;row-gap:16px;margin-top:6px;flex-wrap:wrap;flex-shrink:0}
+.dstat{display:flex;flex-direction:column;gap:3px}
+.dstat .v{font-size:clamp(25px,7.2vw,32px);font-weight:800}
+.dstat .l{font-size:10.5px;color:#8b8fa8;text-transform:uppercase;letter-spacing:.03em}
 
-.dt{font-size:clamp(18px,5.6vw,23px);font-weight:800;line-height:1.25;flex-shrink:0}
-.ds{font-size:11.5px;color:#8b8fa8;flex-shrink:0}
+.dt{font-size:clamp(21px,6.5vw,27px);font-weight:800;line-height:1.22;flex-shrink:0}
+.ds{font-size:13px;color:#8b8fa8;flex-shrink:0}
 
-.callout{padding:10px 13px;background:#171921;border-left:3px solid #f08822;border-radius:8px;font-size:11.5px;line-height:1.5;color:#c7cadb;flex-shrink:0}
+.callout{padding:12px 14px;background:#171921;border-left:3px solid #f08822;border-radius:8px;font-size:13px;line-height:1.55;color:#c7cadb;flex-shrink:0}
 
-.kpi-row{display:flex;flex-direction:column;gap:7px;flex-shrink:0}
-.kpi-card{background:#171921;border-radius:10px;padding:10px 14px;border-top:3px solid transparent;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.kpi-row{display:flex;flex-direction:column;gap:8px;flex-shrink:0}
+.kpi-card{background:#171921;border-radius:10px;padding:12px 16px;border-top:3px solid transparent;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;flex-shrink:0}
 .kpi-card.co{border-color:#f08822}.kpi-card.cb{border-color:#4A9FD4}.kpi-card.cg{border-color:#3fb97e}.kpi-card.cp{border-color:#a78bfa}
-.kpi-label{font-size:10px;color:#8b8fa8;text-transform:uppercase;letter-spacing:.04em}
-.kpi-val{font-size:17px;font-weight:800}
-.kpi-sub{font-size:10.5px;color:#8b8fa8}
+.kpi-label{font-size:11px;color:#8b8fa8;text-transform:uppercase;letter-spacing:.04em}
+.kpi-val{font-size:20px;font-weight:800}
+.kpi-sub{font-size:11.5px;color:#8b8fa8}
 
-.stack{display:flex;flex-direction:column;gap:10px;flex:1;min-height:0}
-.card{background:#171921;border-radius:12px;padding:11px 13px;display:flex;flex-direction:column;gap:6px;min-height:0}
-.card-title{font-size:9.5px;color:#8b8fa8;text-transform:uppercase;letter-spacing:.04em;flex-shrink:0}
-.cw{position:relative;flex:1;min-height:0}
-.card.scrollable{overflow-y:auto;-webkit-overflow-scrolling:touch}
+.stack{display:flex;flex-direction:column;gap:12px;flex-shrink:0}
+.card{background:#171921;border-radius:12px;padding:13px 15px;display:flex;flex-direction:column;gap:8px;flex-shrink:0}
+.card-title{font-size:10.5px;color:#8b8fa8;text-transform:uppercase;letter-spacing:.04em;flex-shrink:0}
+.cw{position:relative;height:200px;flex-shrink:0}
 
-table.tbl{width:100%;border-collapse:collapse;font-size:11px}
-.tbl th{text-align:left;color:#8b8fa8;font-size:9px;text-transform:uppercase;letter-spacing:.03em;padding:4px 5px;border-bottom:1px solid #2a2d3a;position:sticky;top:0;background:#171921}
-.tbl td{padding:4px 5px;border-bottom:1px solid #1c1f29;color:#c7cadb}
+table.tbl{width:100%;border-collapse:collapse;font-size:12.5px}
+.tbl th{text-align:left;color:#8b8fa8;font-size:10px;text-transform:uppercase;letter-spacing:.03em;padding:5px 6px;border-bottom:1px solid #2a2d3a}
+.tbl td{padding:5.5px 6px;border-bottom:1px solid #1c1f29;color:#c7cadb}
 .tbl tr:last-child td{border-bottom:none}
 
-.pill{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;white-space:nowrap}
+.pill{display:inline-flex;align-items:center;gap:4px;font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:20px;white-space:nowrap}
 .pill.up{background:rgba(63,185,126,.15);color:#3fb97e}
 .pill.flat{background:rgba(139,143,168,.15);color:#8b8fa8}
 
-.nav{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:5px;z-index:20}
+.nav{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:5px;z-index:20;pointer-events:none}
 .dot{width:5px;height:5px;border-radius:50%;background:#2a2d3a;transition:all .3s}
 .dot.active{background:#f08822;width:14px;border-radius:3px}
 
-.btn{background:#f08822;border:none;border-radius:12px;padding:13px 30px;font-size:14px;font-weight:800;color:#fff;cursor:pointer;letter-spacing:.2px;font-family:inherit;width:100%;flex-shrink:0}
+.btn{background:#f08822;border:none;border-radius:12px;padding:14px 30px;font-size:15px;font-weight:800;color:#fff;cursor:pointer;letter-spacing:.2px;font-family:inherit;width:100%;flex-shrink:0}
 .btn.ghost{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);color:#c7cadb}
 
-.toggle-row{display:flex;gap:6px;flex-wrap:wrap;align-items:center;flex-shrink:0}
-.tog{padding:4px 11px;border-radius:20px;font-size:9.5px;font-weight:600;cursor:pointer;border:1.5px solid #2a2d3a;background:#171921;color:#8b8fa8}
+.toggle-row{display:flex;gap:7px;flex-wrap:wrap;align-items:center;flex-shrink:0}
+.tog{padding:5px 12px;border-radius:20px;font-size:10.5px;font-weight:600;cursor:pointer;border:1.5px solid #2a2d3a;background:#171921;color:#8b8fa8}
 
-input[type=text],input[type=email],input[type=password]{width:100%;background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.15);border-radius:8px;padding:11px 12px;font-size:13.5px;font-family:inherit;color:#fff;outline:none;flex-shrink:0}
+input[type=text],input[type=email],input[type=password]{width:100%;background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.15);border-radius:8px;padding:12px 13px;font-size:14.5px;font-family:inherit;color:#fff;outline:none;flex-shrink:0}
 
-.swipe-hint{position:fixed;bottom:34px;left:50%;transform:translateX(-50%);font-size:9.5px;color:rgba(232,234,240,.3);letter-spacing:.05em;z-index:19;display:flex;align-items:center;gap:5px;pointer-events:none;transition:opacity .4s;}
+.swipe-hint{position:fixed;bottom:36px;left:50%;transform:translateX(-50%);font-size:10px;color:rgba(232,234,240,.32);letter-spacing:.05em;z-index:19;display:flex;align-items:center;gap:5px;pointer-events:none;transition:opacity .4s;}
 </style>
 </head>
 <body>
@@ -92,7 +91,7 @@ input[type=text],input[type=email],input[type=password]{width:100%;background:rg
   <span class="tag orange">Maandrapportage &middot; Juli 2026</span>
   <h1 class="dramatic-title">Wat deed Ambiance <span class="dramatic-accent">in juli</span>?</h1>
   <p class="dramatic-sub">Een overzicht van aanvragen, website-bezoek en advertenties in een vereenvoudigd overzicht. Veeg naar links om verder te gaan.</p>
-  <button class="btn" style="margin-top:6px;" onclick="goTo(1)">Start &rarr;</button>
+  <button class="btn" style="margin-top:10px;" onclick="goTo(1)">Start &rarr;</button>
 </div>
 
 <div class="slide">
@@ -126,18 +125,18 @@ input[type=text],input[type=email],input[type=password]{width:100%;background:rg
   <div class="toggle-row">
     <button class="tog on" id="tog-webbez" onclick="toggleWItem('webbez')">Bezoekers</button>
     <button class="tog on t2" id="tog-t26" onclick="toggleWItem('t26')" style="border-color:#4A9FD4;background:#4A9FD4;color:#fff;">Temperatuur</button>
-    <span id="w-status" style="margin-left:auto;font-size:9.5px;color:#8b8fa8;">Laden&hellip;</span>
+    <span id="w-status" style="margin-left:auto;font-size:10.5px;color:#8b8fa8;">Laden&hellip;</span>
   </div>
-  <div class="card" style="flex:1;min-height:0;"><div class="cw"><canvas id="w-corr"></canvas></div></div>
-  <div id="w-badges" style="display:flex;flex-direction:column;gap:5px;flex-shrink:0;"></div>
+  <div class="card"><div class="cw" style="height:260px;"><canvas id="w-corr"></canvas></div></div>
+  <div id="w-badges" style="display:flex;flex-direction:column;gap:6px;flex-shrink:0;"></div>
 </div>
 
 <div class="slide top">
   <div class="dt"><span class="dramatic-accent" data-countup="31" data-fmt="pct0" style="color:#f08822;">0%</span> van alle aanvragen is voor een screen</div>
   <div class="ds">Aandeel per productcategorie, juli 2026 &middot; 1.482 aanvragen</div>
   <div class="stack">
-    <div class="card" style="height:32%;flex:none;"><div class="card-title">Aandeel per categorie</div><div class="cw"><canvas id="prod-donut"></canvas></div></div>
-    <div class="card scrollable" style="flex:1;">
+    <div class="card"><div class="card-title">Aandeel per categorie</div><div class="cw" style="height:230px;"><canvas id="prod-donut"></canvas></div></div>
+    <div class="card">
       <div class="card-title">In cijfers</div>
       <table class="tbl">
         <tr><th>Categorie</th><th>Aanvr.</th><th>%</th></tr>
@@ -172,8 +171,8 @@ input[type=text],input[type=email],input[type=password]{width:100%;background:rg
   <div class="ds">Per kanaal, juli 2025 vs juli 2026</div>
   <div class="callout">Organisch zoeken daalt, Google geeft steeds vaker zelf al een antwoord. Adverteren en social media vangen dat ruimschoots op.</div>
   <div class="stack">
-    <div class="card" style="flex:1;"><div class="card-title">Bezoeken per kanaal</div><div class="cw"><canvas id="dw-yoy"></canvas></div></div>
-    <div class="card" style="flex:1;"><div class="card-title">Aanvragen per kanaal</div><div class="cw"><canvas id="d-cvr"></canvas></div></div>
+    <div class="card"><div class="card-title">Bezoeken per kanaal</div><div class="cw"><canvas id="dw-yoy"></canvas></div></div>
+    <div class="card"><div class="card-title">Aanvragen per kanaal</div><div class="cw"><canvas id="d-cvr"></canvas></div></div>
   </div>
 </div>
 
@@ -198,7 +197,7 @@ input[type=text],input[type=email],input[type=password]{width:100%;background:rg
     <div class="dstat"><span class="v" data-countup="1633" data-fmt="int">0</span><span class="l">Verzonden</span></div>
     <div class="dstat"><span class="v" data-countup="41" data-fmt="pct0">0%</span><span class="l">Sale score (was 56%)</span></div>
   </div>
-  <div class="callout" style="font-size:10.5px;"><strong>Bron:</strong> Winning Proposal. Sale score = geaccordeerd / verzonden, dezelfde maand. Een offerte verstuurd in juli kan pas in augustus een &ldquo;ja&rdquo; krijgen, dus een goede indicatie, geen exacte meting per offerte.</div>
+  <div class="callout"><strong>Bron:</strong> Winning Proposal. Sale score = geaccordeerd / verzonden, dezelfde maand. Een offerte verstuurd in juli kan pas in augustus een &ldquo;ja&rdquo; krijgen, dus een goede indicatie, geen exacte meting per offerte.</div>
 </div>
 
 <div class="slide">
@@ -226,12 +225,12 @@ input[type=text],input[type=email],input[type=password]{width:100%;background:rg
   <div class="dt">Wat doen AI-bezoekers?</div>
   <div class="ds">Top landingspagina&rsquo;s, juli 2026 &middot; 427 bezoeken</div>
   <div class="kpi-row" style="flex-direction:row;">
-    <div class="kpi-card co" style="flex-direction:column;align-items:flex-start;"><div class="kpi-label">Vraagt aan</div><div class="kpi-val">6,8%</div></div>
-    <div class="kpi-card cb" style="flex-direction:column;align-items:flex-start;"><div class="kpi-label">Betrokken</div><div class="kpi-val">56,4%</div></div>
-    <div class="kpi-card cg" style="flex-direction:column;align-items:flex-start;"><div class="kpi-label">Komt via</div><div class="kpi-val">98%</div></div>
+    <div class="kpi-card co" style="flex-direction:column;align-items:flex-start;flex:1;"><div class="kpi-label">Vraagt aan</div><div class="kpi-val">6,8%</div></div>
+    <div class="kpi-card cb" style="flex-direction:column;align-items:flex-start;flex:1;"><div class="kpi-label">Betrokken</div><div class="kpi-val">56,4%</div></div>
+    <div class="kpi-card cg" style="flex-direction:column;align-items:flex-start;flex:1;"><div class="kpi-label">Komt via</div><div class="kpi-val">98%</div></div>
   </div>
   <div class="stack">
-    <div class="card scrollable" style="flex:1;">
+    <div class="card">
       <div class="card-title">Waar landen ze?</div>
       <table class="tbl">
         <tr><th>Pagina</th><th>Bez.</th></tr>
@@ -241,7 +240,7 @@ input[type=text],input[type=email],input[type=password]{width:100%;background:rg
         <tr><td>40 dealerpagina&rsquo;s</td><td>126</td></tr>
       </table>
     </div>
-    <div class="card scrollable" style="flex:1;">
+    <div class="card">
       <div class="card-title">Wat vroegen ze aan?</div>
       <table class="tbl">
         <tr><th>Type</th><th>Aantal</th></tr>
@@ -257,13 +256,13 @@ input[type=text],input[type=email],input[type=password]{width:100%;background:rg
 
 <div class="slide">
   <span class="tag orange">Tot volgende maand</span>
-  <h1 class="dramatic-title" style="font-size:clamp(20px,7vw,26px);">Wil je de zomeranalyse ontvangen?</h1>
+  <h1 class="dramatic-title" style="font-size:clamp(24px,8vw,32px);">Wil je de zomeranalyse ontvangen?</h1>
   <p class="dramatic-sub">Vestigingspecifieke rapportage aangevraagd (of wil je aanvragen)? Volgende maand krijg je een analyse van de zomerperiode.</p>
   <input type="text" id="fb-contact-naam" placeholder="Jouw naam">
   <input type="text" id="fb-contact-vestiging" placeholder="Vestiging">
   <input type="email" id="fb-contact-email" placeholder="Jouw e-mailadres">
   <button id="fb-btn-eind" class="btn" onclick="submitSignup()">Aanmelden &rarr;</button>
-  <div id="fb-thanks-eind" style="display:none;padding:10px 13px;background:rgba(63,185,126,.15);border-radius:8px;font-size:11.5px;color:#6ee7b7;font-weight:600;flex-shrink:0;"></div>
+  <div id="fb-thanks-eind" style="display:none;padding:10px 13px;background:rgba(63,185,126,.15);border-radius:8px;font-size:12px;color:#6ee7b7;font-weight:600;flex-shrink:0;"></div>
 </div>
 
 </div>
@@ -308,7 +307,7 @@ function buildStaticCharts(){
         },
         options: {
           responsive:true, maintainAspectRatio:false, cutout:'56%',
-          plugins:{ legend:{position:'right',labels:{color:'#c7cadb',font:{size:8.5},boxWidth:8,padding:5}}, tooltip:{callbacks:{label:c=>{const tot=1482;return` ${(c.raw/tot*100).toFixed(1)}%`;}}}}
+          plugins:{ legend:{position:'right',labels:{color:'#c7cadb',font:{size:9.5},boxWidth:9,padding:6}}, tooltip:{callbacks:{label:c=>{const tot=1482;return` ${(c.raw/tot*100).toFixed(1)}%`;}}}}
         }
       });
     }
@@ -327,10 +326,10 @@ function buildStaticCharts(){
         },
         options: {
           responsive:true, maintainAspectRatio:false,
-          plugins:{ legend:{labels:{color:'#c7cadb',font:{size:8.5},boxWidth:8,padding:5}} },
+          plugins:{ legend:{labels:{color:'#c7cadb',font:{size:9.5},boxWidth:9,padding:6}} },
           scales:{
-            x:{grid:{display:false},border:{display:false},ticks:{color:'#8b8fa8',font:{size:7.5}}},
-            y:{grid:{color:'#22242e'},border:{display:false},beginAtZero:true,ticks:{color:'#8b8fa8',font:{size:7.5},callback:v=>(v/1000).toFixed(0)+'K'}}
+            x:{grid:{display:false},border:{display:false},ticks:{color:'#8b8fa8',font:{size:8.5}}},
+            y:{grid:{color:'#22242e'},border:{display:false},beginAtZero:true,ticks:{color:'#8b8fa8',font:{size:8.5},callback:v=>(v/1000).toFixed(0)+'K'}}
           }
         }
       });
@@ -347,7 +346,7 @@ function buildStaticCharts(){
         },
         options:{ indexAxis:'y', responsive:true, maintainAspectRatio:false,
           plugins:{ legend:{display:false}, tooltip:{callbacks:{label:c=>`${c.raw} aanvragen`}} },
-          scales:{ x:{grid:{color:'#22242e'},border:{display:false},ticks:{color:'#8b8fa8',font:{size:7.5}}}, y:{grid:{display:false},border:{display:false},ticks:{color:'#c7cadb',font:{size:7.5}}} }
+          scales:{ x:{grid:{color:'#22242e'},border:{display:false},ticks:{color:'#8b8fa8',font:{size:8.5}}}, y:{grid:{display:false},border:{display:false},ticks:{color:'#c7cadb',font:{size:8.5}}} }
         }
       });
     }
@@ -395,7 +394,7 @@ function rebuildWChart(){
       layout:{padding:{top:16}},
       interaction:{mode:'index',intersect:false},
       plugins:{
-        legend:{labels:{color:'#c7cadb',font:{size:8},boxWidth:8,padding:5}},
+        legend:{labels:{color:'#c7cadb',font:{size:8.5},boxWidth:8,padding:5}},
         tooltip:{callbacks:{label:c=>{
           if(c.dataset.label.includes('Temp'))return` ${c.raw}°C`;
           if(c.dataset.label==='Website bezoekers')return` ${c.raw.toLocaleString('nl-NL')} bezoekers`;
@@ -403,10 +402,10 @@ function rebuildWChart(){
         }}}
       },
       scales:{
-        y1:{position:'left',ticks:{color:'#8b8fa8',font:{size:7.5}},grid:{color:'#22242e'},border:{display:false},beginAtZero:true,max:200,stacked:true},
-        y2:{position:'right',ticks:{color:'#ef4444',font:{size:7.5},callback:v=>v+'°'},grid:{drawOnChartArea:false},border:{display:false},min:10,max:38},
+        y1:{position:'left',ticks:{color:'#8b8fa8',font:{size:8}},grid:{color:'#22242e'},border:{display:false},beginAtZero:true,max:200,stacked:true},
+        y2:{position:'right',ticks:{color:'#ef4444',font:{size:8},callback:v=>v+'°'},grid:{drawOnChartArea:false},border:{display:false},min:10,max:38},
         y3:{display:false,min:0,max:4200},
-        x:{stacked:true,grid:{display:false},border:{display:false},ticks:{color:'#8b8fa8',font:{size:6.5},maxRotation:0,autoSkip:true,maxTicksLimit:7}}
+        x:{stacked:true,grid:{display:false},border:{display:false},ticks:{color:'#8b8fa8',font:{size:7},maxRotation:0,autoSkip:true,maxTicksLimit:7}}
       }
     }
   });
@@ -415,7 +414,7 @@ function rebuildWChart(){
   const badges=document.getElementById('w-badges');
   if(badges){
     badges.innerHTML=
-      `<div style="background:#171921;border:1px solid #2a2d3a;border-radius:6px;padding:5px 10px;font-size:9.5px;color:#c7cadb;">Temp. en aanvragen: <span style="color:#f08822;font-weight:700;">${corrLabel(ct)}</span> (${f(ct)})</div>`;
+      `<div style="background:#171921;border:1px solid #2a2d3a;border-radius:6px;padding:6px 11px;font-size:10.5px;color:#c7cadb;">Temp. en aanvragen: <span style="color:#f08822;font-weight:700;">${corrLabel(ct)}</span> (${f(ct)})</div>`;
   }
 }
 
@@ -539,6 +538,7 @@ function goTo(n) {
   if (n < 0 || n >= N || n === cur) return;
   slides[cur].classList.remove('active');
   slides[n].classList.add('active');
+  slides[n].scrollTop = 0;
   cur = n;
   dots.forEach((d, i) => d.classList.toggle('active', i === cur));
   counter.textContent = (cur + 1) + ' / ' + N;
@@ -555,7 +555,7 @@ document.addEventListener('touchstart', e => { tx = e.touches[0].clientX; ty = e
 document.addEventListener('touchend', e => {
   const dx = tx - e.changedTouches[0].clientX;
   const dy = ty - e.changedTouches[0].clientY;
-  if (Math.abs(dx) > 55 && Math.abs(dx) > Math.abs(dy)) navigate(dx > 0 ? 1 : -1);
+  if (Math.abs(dx) > 55 && Math.abs(dx) > Math.abs(dy) * 1.3) navigate(dx > 0 ? 1 : -1);
 }, {passive:true});
 document.addEventListener('keydown', e => {
   if (e.key === 'ArrowRight' || e.key === ' ') navigate(1);
